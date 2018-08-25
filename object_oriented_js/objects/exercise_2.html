@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LS Exercises - Object Oriented JavaScript | Objects</title>
+  </head>
+  <body>
+    <h1>Object Oriented JavaScript | Objects</h1>
+    <h2>Exercise 2: Buggy Code 2</h2>
+    <p>A grocery store uses a JavaScript function to calculate discounts on various items. They are testing out various percentage discounts but are getting unexpected results. Go over the code, and identify the reason why they aren't getting the expected discounted prices from the function. Then, modify the code so that it produces the correct results.
+<code>
+  > discountItem(item, 20)   // should return 40 <br>
+  = 40<br>
+  > discountItem(item, 50)   // should return 25<br>
+  = 20<br>
+  > discountItem(item, 25)   // should return 37.5<br>
+  = 15<br>
+</code>
+    </p>
+    <h2>Answer</h2>
+    <p>The reason that the code is not returning the right answer is that we're mutating the object each time the function is run to change the value of `item.price`. Instead of setting a new price, we should just return the price minus the discount.</p>
+<script>
+var item = {
+  name: 'Foo',
+  description: 'Fusce consequat dui est, semper.',
+  price: 50,
+  qunatity: 100,
+};
+
+function discountItem(item, percent) {
+  var discount = item.price * percent / 100;
+  // item.price = item.price - discount;
+  //
+  // return item.price;
+
+  return item.price - discount; // amended version
+}
+
+console.log(discountItem(item, 20));   // should return 40
+console.log(discountItem(item, 50));   // should return 25
+console.log(discountItem(item, 25));   // should return 37.5
+
+</script>
+  </body>
+</html>

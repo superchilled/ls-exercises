@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LS Exercises - Object Oriented JavaScript | Objects</title>
+  </head>
+  <body>
+    <h1>Object Oriented JavaScript | Objects</h1>
+    <h2>Exercise 1: Buggy Code 1</h2>
+    <p>The code below is expected to output the following when run:
+    <code>
+      > var helloVictor = createGreeter('Victor');<br>
+      > helloVictor.greet('morning');<br>
+      = "Good Morning Victor"<br>
+    </code>
+  <br>
+
+However, it instead results in an error. What is the problem with the code? Why isn't it producing the expected results?</p>
+<h2>Answer</h2>
+<p>The problem with the code is that the `morning` and `name` properties are not prepended with `this`, so the method call is trying to access undefined variables of those names.</p>
+<script>
+function createGreeter(name) {
+  return {
+    name: name,
+    morning: 'Good Morning',
+    afternoon: 'Good Afternoon',
+    evening: 'Good Evening',
+    greet: function(timeOfDay) {
+      var msg = ''
+      switch (timeOfDay) {
+        case 'morning':
+          msg += morning + ' ' + name;
+          break;
+        case 'afternoon':
+          msg += afternoon + ' ' + name;
+          break;
+        case 'evening':
+          msg += evening + ' ' + name;
+          break;
+      }
+
+      console.log(msg);
+    },
+  };
+}
+
+var helloVictor = createGreeter('Victor');
+helloVictor.greet('morning');
+</script>
+  </body>
+</html>

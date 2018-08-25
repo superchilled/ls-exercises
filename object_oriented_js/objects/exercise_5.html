@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LS Exercises - Object Oriented JavaScript | Objects</title>
+  </head>
+  <body>
+    <h1>Object Oriented JavaScript | Objects</h1>
+    <h2>Exercise 5: School</h2>
+    <p>Create a school object. The school object uses the student object from the previous exercise. It has methods that use and update information about the student. Be sure to check out the previous exercise for the other arguments that might be needed by the school object. Implement the following methods for the school object:
+    <ul>
+      <li>addStudent: Adds a student by creating a new student and adding the student to a collection of students. The method adds a constraint that the year can only be any of the following values: '1st', '2nd', '3rd', '4th', or '5th'. Returns a student object if year is valid otherwise it logs "Invalid Year".</li>
+      <li>enrollStudent: Enrolls a student in a course.</li>
+      <li>addGrade: Adds the grade of a student for a course.</li>
+      <li>getReportCard: Logs the grades of a student for all courses. If the course has no grade, it uses "In progress" as the grade.</li>
+      <li>courseReport: Logs the grades of all students for a given course name. Only student with grades are part of the course report.</li>
+    </ul>
+To test your code, use the three student objects listed below. Using the three student objects, produces the following values from the getReportCard and courseReport methods respectively.</p>
+<script>
+function createStudent(name, year) {
+  return {
+    name: name,
+    year: year,
+    courses: [],
+    info: function() {
+      console.log(this.name + ' is a ' + this.year +  ' year student');
+    },
+    addCourse: function(course) {
+      this.courses.push(course);
+    },
+    listCourses: function() {
+      console.log(this.courses);
+    },
+    addNote: function(code, note) {
+      this.courses.forEach(function(course) {
+        if (course.code === code) {
+          if (course.notes) {
+            course.notes.push(note);
+          } else {
+            course.notes = [note];
+          }
+        }
+      });
+    },
+    viewNotes: function() {
+      this.courses.forEach(function(course) {
+        if (course.notes) {
+          console.log(course.name + ': ' + course.notes.join('; '));
+        }
+      });
+    },
+    updateNote: function(code, note) {
+      this.courses.forEach(function(course) {
+        if (course.code === code) {
+          course.notes = [note];
+        }
+      });
+    }
+  };
+};
+
+var school = {
+  students: [],
+  courses: [
+    { name: 'Math', code: 101 },
+    { name: 'Advanced Math', code: 102 },
+    { name: 'Physics', code: 202 }
+  ],
+  addStudent: function(name, year) {
+    this.students.forEach(function(student) {
+      if (name === student.name) {
+        console.log('Student already exists.');
+        return;
+      }
+    });
+    if (['1st', '2nd', '3rd', '4th', '5th'].includes(year)) {
+      newStudent = createStudent(name, year);
+      this.students.push(newStudent);
+      return newStudent;
+    } else {
+      console.log('Invalid Year');
+    }
+  },
+  enrollStudent: function(studentName, courseCode) {
+    var tempStudent;
+    this.students.forEach(function(student) {
+      if (studentName === student.name) {
+        tempStudent = student;
+      }
+    });
+    if (tempStudent) {
+      var tempCourse;
+      this.courses.forEach(function(course) {
+        if (courseCode === course.code) {
+          tempCourse = course;
+        }
+      });
+      if (tempCourse) {
+        tempStudent.addCourse(tempCourse);
+      } else {
+        console.log('Course does not exist');
+      }
+    } else {
+      console.log('Student does not exist');
+    }
+  },
+  addGrade: function(studentName, courseCode, grade) {
+    var tempStudent;
+    this.students.forEach(function(student) {
+      if (studentName === student.name) {
+        tempStudent = student;
+      }
+    });
+    if (tempStudent) {
+      var tempCourse;
+      tempStudent.courses.forEach(function(course) {
+        if (courseCode === course.code) {
+          tempCourse = course;
+        }
+      });
+      if (tempCourse) {
+        tempCourse.grade = grade;
+      } else {
+        console.log('Student not enrolled in this course');
+      }
+    } else {
+      console.log('Student does not exist');
+    }
+  },
+  getReportCard: function() {
+
+  },
+  courseReport: function() {
+
+  },
+};
+
+school.addStudent('foo', '3rd');
+school.addStudent('bar', '1st');
+school.addStudent('qux', '2nd');
+school.enrollStudent('foo', 101);
+school.enrollStudent('foo', 102);
+school.enrollStudent('foo', 202);
+school.enrollStudent('bar', 101);
+school.enrollStudent('qux', 101);
+school.enrollStudent('qux', 102);
+school.addGrade('foo', 101, 95);
+school.addGrade('foo', 102, 90);
+school.addGrade('bar', 101, 91);
+school.addGrade('qux', 101, 93);
+school.addGrade('qux', 102, 90);
+console.log(school.students);
+
+school.getReportCard('foo');
+// Math: 95
+// Advanced Math: 90
+// Physics: In progress
+
+school.courseReport('Math');
+// =Math Grades=
+// foo: 95
+// bar: 91
+// qux: 93
+// ---
+// Course Average: 91
+
+school.courseReport('Advanced Math');
+// =Advanced Math Grades=
+// foo: 90
+// ---
+// Course Average: 90
+
+school.courseReport('Physics');
+// undefined
+
+</script>
+  </body>
+</html>

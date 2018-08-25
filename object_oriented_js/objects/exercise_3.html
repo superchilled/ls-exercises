@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LS Exercises - Object Oriented JavaScript | Objects</title>
+  </head>
+  <body>
+    <h1>Object Oriented JavaScript | Objects</h1>
+    <h2>Exercise 3: Testing Object Equality</h2>
+    <p>In JavaScript, comparing two objects either with <code>==</code> or <code>===</code> checks for object identity. In other words, the comparison evaluates to <code>true</code>  if it's the same object on either side of <code>==</code> or <code>===</code> This is a limitation, in a sense, because sometimes we need to check if two objects have the same key/value pairs. JavaScript doesn't give us a way to do that.
+
+Write a function <code>objectsEqual</code> that accepts two object arguments and returns <code>true</code> or <code>false</code> depending on whether the objects have the same key/value pairs.</p>
+<script>
+function objectsEqual(obj1, obj2) {
+  var obj1Props = Object.keys(obj1);
+
+  if (obj1Props.length !== Object.keys(obj2).length) {
+    return false;
+  }
+
+  obj1Props.forEach(function(prop) {
+    if (obj1[prop] !== obj2[prop]) {
+      return false;
+    }
+  });
+
+  return true;
+};
+
+console.log(objectsEqual({a: 'foo'}, {a: 'foo'})); // true
+console.log(objectsEqual({a: 'foo', b: 'bar'}, {a: 'foo'})); // false
+console.log(objectsEqual({}, {})); // true
+</script>
+  </body>
+</html>
