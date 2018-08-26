@@ -7,9 +7,53 @@
   <body>
     <h1>Object Oriented JavaScript | Object Creation Patterns</h1>
     <h2>Exercise 1:	Ancestors</h2>
-    <p></p>
+    <p>Implement an ancestors method that returns the prototype chain (ancestors) of a calling object as an array. Here's an example output:
+<code>
+// name property added to make objects easier to identify <br>
+var foo = {name: 'foo'};<br>
+var bar = Object.create(foo);<br>
+bar.name = 'bar';<br>
+var baz = Object.create(bar);<br>
+baz.name = 'baz';<br>
+var qux = Object.create(baz);<br>
+qux.name = 'qux';<br>
+<br>
+qux.ancestors();  // returns [baz, bar, foo, Object.prototype]<br>
+baz.ancestors();  // returns [bar, foo, Object.prototype]<br>
+bar.ancestors();  // returns [foo, Object.prototype]<br>
+foo.ancestors();  // returns [Object.prototype]<br>
+</code>
+</p>
 <script>
+// name property added to make objects easier to identify
+Object.prototype.ancestors = function() {
+  var proto = Object.getPrototypeOf(this);
+  var ancestorsArr;
+  if (arguments.length === 0) {
+    ancestorsArr = [];
+  } else {
+    ancestorsArr = arguments[0];
+  }
+  if (proto) {
+    ancestorsArr.push(proto);
+    proto.ancestors(ancestorsArr);
+  }
+  return ancestorsArr;
+}
 
+
+var foo = {name: 'foo'};
+var bar = Object.create(foo);
+bar.name = 'bar';
+var baz = Object.create(bar);
+baz.name = 'baz';
+var qux = Object.create(baz);
+qux.name = 'qux';
+
+console.log(qux.ancestors());  // returns [baz, bar, foo, Object.prototype]
+console.log(baz.ancestors());  // returns [bar, foo, Object.prototype]
+console.log(bar.ancestors());  // returns [foo, Object.prototype]
+console.log(foo.ancestors());  // returns [Object.prototype]
 </script>
   </body>
 </html>

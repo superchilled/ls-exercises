@@ -7,9 +7,20 @@
   <body>
     <h1>Object Oriented JavaScript | Function Context, Scope, and Closures</h1>
     <h2>Exercise 3: The Franchise - Solution 2</h2>
-    <p></p>
+    <p>In the previous exercise, we had a situation where an anonymous method passed to map had an undesirable execution context. We solved the problem by taking advantage of lexical scoping and introducing a new variable self. Solve the same problem again by passing a hard-bound anonymous function to <code>map</code>.</p>
+    <h2>Answer</h2>
+    <p>We can do this by appending `.bind(this)` to the anonymous function. Alternatively we can use the optional `this` argument of `map`.</p>
 <script>
+var franchise = {
+  name: 'How to Train Your Dragon',
+  allMovies: function() {
+    return [1, 2, 3].map(function(number) {
+      return this.name + ' ' + number;
+    }.bind(this));
+  },
+};
 
+console.log(franchise.allMovies());
 </script>
   </body>
 </html>

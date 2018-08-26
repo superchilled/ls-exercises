@@ -7,9 +7,25 @@
   <body>
     <h1>Object Oriented JavaScript | Function Context, Scope, and Closures</h1>
     <h2>Exercise 5: myBind() Improved</h2>
-    <p></p>
-<script>
+    <p>Our earlier implementation of the Function.prototype.bind was simplistic. Function.prototype.bind has another trick up its sleeve besides hard-binding functions to context objects. It's called partial function application. Read this assignment and the MDN doucmentation to learn more about partial function application.</p>
 
+    <p>Alter the myBind function written in the previous exercise to support partial function application.</p>
+<script>
+function myBind(func, obj) {
+  var outerArgs = [].slice.apply(arguments, [2]);
+  return function() {
+    var innerArgs = [].slice.apply(arguments);
+    return func.apply(obj, outerArgs.concat(innerArgs));
+  }
+}
+
+function addNumbers(a, b) {
+  return a + b;
+}
+
+var addFive = myBind(addNumbers, null, 5);
+
+console.log(addFive(10)); // 15
 </script>
   </body>
 </html>

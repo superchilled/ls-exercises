@@ -7,9 +7,26 @@
   <body>
     <h1>Object Oriented JavaScript | Function Context, Scope, and Closures</h1>
     <h2>Exercise 1:	What is This</h2>
-    <p></p>
+    <p>Read the following code carefully. What do you think is logged on line 7. Try to answer the question before you run the code.
+    <code>
+      var person = { <br>
+        firstName: 'Rick ',<br>
+        lastName: 'Sanchez',<br>
+        fullName: this.firstName + ' ' + this.lastName,<br>
+      };<br>
+<br>
+      console.log(person.fullName);<br>
+    </code></p>
+    <h2>Answer</h2>
+    <p>Line 7 will log <code>undefined undefined</code>, because `fullName` is not a method, it isn't being being executed, and so there is not an execustion context to consider here. When the object is create, `this` is the global object and `firstName` and `lastName` are `undefined` on the global object and so this is what is set as the values for `fullName`.</p>
 <script>
+var person = {
+  firstName: 'Rick ',
+  lastName: 'Sanchez',
+  fullName: this.firstName + ' ' + this.lastName,
+};
 
+console.log(person.fullName);
 </script>
   </body>
 </html>

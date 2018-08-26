@@ -7,9 +7,40 @@
   <body>
     <h1>Object Oriented JavaScript | Function Context, Scope, and Closures</h1>
     <h2>Exercise 2: The Franchise</h2>
-    <p></p>
+    <p>The method franchise.allMovies is supposed to return the following array:
+    <code>
+      [ <br>
+  'How to Train Your Dragon 1',<br>
+  'How to Train Your Dragon 2',<br>
+  'How to Train Your Dragon 3'<br>
+]<br>
+    </code>
+    Explain why this method will not return the desired object? Try fixing this problem by taking advantage of JavaScript lexical scoping rules.
+    <code>
+      var franchise = { <br>
+  name: 'How to Train Your Dragon',<br>
+  allMovies: function() {<br>
+    return [1, 2, 3].map(function(number) {<br>
+      return this.name + ' ' + number;<br>
+    });<br>
+  },<br>
+};<br>
+    </code>
+  </p>
+  <h2>Answer</h2>
+  <p>This method will not return the desired object because when `this` is referenced within an anonymous function call, such as here with the function passed to `map`, the context of `this` changes to the global object (i.e. this context is not determined by the context of the 'outer' function). We can fix this by setting a variable (e.g. `self`) to `this` within the outer function, and referencing this variable in the inner function.</p>
 <script>
+var franchise = {
+  name: 'How to Train Your Dragon',
+  allMovies: function() {
+    var self = this;
+    return [1, 2, 3].map(function(number) {
+      return self.name + ' ' + number;
+    });
+  },
+};
 
+console.log(franchise.allMovies());
 </script>
   </body>
 </html>

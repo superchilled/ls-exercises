@@ -7,9 +7,35 @@
   <body>
     <h1>Object Oriented JavaScript | Function Context, Scope, and Closures</h1>
     <h2>Exercise 8: Make a Stack</h2>
-    <p></p>
-<script>
+    <p>Stack is a compound data type like an array. The difference between an array and a stack is that in an array you can insert and remove elements in any order you want but stack has a rule whereby you can only remove the last inserted element.</p>
 
+    <p>Create a function newStack, that when called returns a stack object with three methods: push, pop, and printStack. push takes a value and insert it into the stack. pop removes the last element from the stack. printStack logs each remaining element of the stack on its own line.</p>
+
+    <p>Internally, use an array to implement the stack. Make sure that the array is not accessible from outside the methods.</p>
+<script>
+function newStack() {
+  var stack = [];
+  return {
+    push: function(elem) {
+      stack.push(elem);
+    },
+    pop: function() {
+      stack.pop();
+    },
+    printStack: function() {
+      stack.forEach(function(elem) {
+        console.log(elem);
+      });
+    },
+  };
+}
+
+var myStack = newStack();
+myStack.push(5);
+myStack.push(8);
+myStack.printStack();
+myStack.pop();
+myStack.printStack();
 </script>
   </body>
 </html>

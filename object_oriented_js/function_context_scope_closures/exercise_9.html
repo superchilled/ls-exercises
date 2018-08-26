@@ -7,9 +7,34 @@
   <body>
     <h1>Object Oriented JavaScript | Function Context, Scope, and Closures</h1>
     <h2>Exercise 9: Don't Pollute My Window</h2>
-    <p></p>
+    <p>Consider the following code:
+<code>
+var name = 'Naveed'; <br>
+var greeting = 'Hello';<br>
+<br>
+var greeter = {<br>
+  message: greeting + ' ' + name + '!',<br>
+  sayGreetings: function() {<br>
+    console.log(this.message);<br>
+  }<br>
+};<br>
+</code>
+Note that the message property uses the result of concatenation as its value. As a result, we have two global variables: name, and greeting that pollute the global scope. As we already know, we should limit the use of global variables as much as we can. Here we can avoid using the global variables by simply setting the message property to the value "Hello Naveed!". But let's pretend that we must use variables and concatenation to accomplish this. Can you think of a way to refactor this code so we don't have any other variables in the global scope besides greeter?</p>
 <script>
+function makeGreeter(name, greeting) {
+  var name = name;
+  var greeting = greeting;
+  return {
+    message: greeting + ' ' + name + '!',
+    sayGreetings: function() {
+      console.log(this.message);
+    }
+  };
+};
 
+
+var greeter = makeGreeter('Naveed', 'Hello');
+greeter.sayGreetings();
 </script>
   </body>
 </html>

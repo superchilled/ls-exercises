@@ -92,7 +92,7 @@ var school = {
       var tempCourse;
       this.courses.forEach(function(course) {
         if (courseCode === course.code) {
-          tempCourse = course;
+          tempCourse = Object.assign({}, course);
         }
       });
       if (tempCourse) {
@@ -127,11 +127,48 @@ var school = {
       console.log('Student does not exist');
     }
   },
-  getReportCard: function() {
-
+  getReportCard: function(studentName) {
+    var tempStudent;
+    this.students.forEach(function(student) {
+      if (studentName === student.name) {
+        tempStudent = student;
+      }
+    });
+    if (tempStudent) {
+      tempStudent.courses.forEach(function(course) {
+        if (course.grade) {
+          console.log(course.name + ': ' + String(course.grade));
+        } else {
+          console.log(course.name + ': ' + 'In progress');
+        }
+      });
+    }
   },
-  courseReport: function() {
-
+  courseReport: function(courseName) {
+    var report = {};
+    this.students.forEach(function(student) {
+      var studentName = student.name;
+      student.courses.forEach(function(course) {
+        if (course.name === courseName && course.grade) {
+          report[studentName] = course.grade;
+        }
+      })
+    });
+    if (Object.keys(report).length > 0) {
+      var courseTotal = Object.values(report).reduce(function(total, grade){
+        total += grade;
+        return total;
+      });
+      var average = courseTotal / Object.keys(report).length;
+      console.log('=' + courseName + '=');
+      Object.keys(report).forEach(function(key) {
+        console.log(key + ': ' + String(report[key]));
+      })
+      console.log('---');
+      console.log('Course Average: ' + String(average));
+    } else {
+      console.log(undefined);
+    }
   },
 };
 
