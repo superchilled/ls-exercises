@@ -53,6 +53,109 @@
       </ul>
     </p>
 <script>
+/*
+Item creator - checks that objecs are valid
+Item manager - creates new item objects
+Report manager - generates reports from Item manager objects
+*/
+
+var ItemCreator = {
+  createItem: function(itemName, category, quantity) {
+    var item = Object.create(Object.prototype);
+    if (this.validName(itemName) && this.validCategory(category) && this.validQuantity(quantity)) {
+      item.skuCode = this.generateSKUCode(itemName, category);
+      item.itemName = itemName;
+      item.category = category;
+      item.quantity = quantity;
+    } else {
+      item.notValid = true;
+    }
+    return item;
+  },
+  validName: function(itemName) {
+    return itemName.replace(/[\s]/g, '').length >= 5;
+  },
+  validCategory: function(category) {
+    return category.match(/[\s]/g) === null && category.length >= 5;
+  },
+  validQuantity: function(quantity) {
+    return typeof quantity === 'number';
+  },
+  generateSKUCode: function(itemName, category) {
+    return (itemName.replace(/[\s]/g, '').substring(0, 3) + category.substring(0, 2)).toUpperCase();
+  },
+};
+
+var ItemManager = {
+  items: [],
+  create: function(itemName, category, quantity) {
+    var item = ItemCreator.createItem(itemName, category, quantity);
+    if (!item.notValid) {
+      this.items.push(item);
+    }
+  },
+  update: function(skuCode, obj) {
+    var itemsForUpdate = this.items.filter(function(item) {
+      return item.skuCode === skuCode;
+    });
+    itemsForUpdate.forEach(function(item) {
+      Object.keys(obj).forEach(function(key) {
+        item[key] = obj[key];
+      })
+    });
+  },
+  delete: function(skuCode) {
+    this.items = this.items.filter(function(item) {
+      return item.skuCode !== skuCode;
+    });
+  },
+  inStock: function() {
+    var stockList = [];
+    this.items.forEach(function(item) {
+      if (item.quantity > 0) {
+        stockList.push(item.itemName);
+      }
+    });
+    return stockList;
+  },
+  itemsInCategory: function(category) {
+    var categoryList = [];
+    this.items.forEach(function(item) {
+      if (item.category === category) {
+        categoryList.push(item.itemName);
+      }
+    });
+    return categoryList;
+  },
+};
+
+var ReportManager = {
+  init: function(itemManager) {
+    this.items = itemManager;
+  },
+  createReporter: function(skuCode) {
+    reporter = this.items.items.filter(function(item) {
+      return item.skuCode === skuCode;
+    })[0];
+    reporter.itemInfo = function() {
+      Object.getOwnPropertyNames(this).forEach(function(property) {
+        if (property !== 'itemInfo') {
+          console.log(property + ': ' + this[property]);
+        }
+      }, this);
+    }
+    return reporter;
+  },
+  reportInStock: function() {
+    var stockList = [];
+      this.items.inStock().forEach(function(item) {
+        stockList.push(item);
+      });
+    console.log(stockList.join());
+  },
+};
+
+// ===SAMPLE RUN ===
 ItemManager.create('basket ball', 'sports', 0);           // valid item
 ItemManager.create('asd', 'sports', 0);
 ItemManager.create('soccer ball', 'sports', 5);           // valid item
@@ -95,6 +198,74 @@ kitchenPotReporter.itemInfo();
 // itemName: kitchen pot
 // category: cooking
 // quantity: 10
+
+// =ITEM CREATOR TESTS==
+// var item1 = ItemCreator.createItem('basket ball', 'sports', 0);           // valid item
+// var item2 = ItemCreator.createItem('asd', 'sports', 0);
+// var item3 = ItemCreator.createItem('soccer ball', 'sports', 5);           // valid item
+// var item4 = ItemCreator.createItem('football', 'sports');
+// var item5 = ItemCreator.createItem('football', 'sports', 3);              // valid item
+// var item6 = ItemCreator.createItem('kitchen pot', 'cooking items', 0);
+// var item7 = ItemCreator.createItem('kitchen pot', 'cooking', 3);          // valid item
+//
+// console.log(item1.skuCode === 'BASSP'); // true
+// console.log(item1.itemName === 'basket ball'); // true
+// console.log(item1.category === 'sports'); // true
+// console.log(item1.quantity === 0); // true
+// console.log(Object.getOwnPropertyNames(item1).length === 4); // true
+// console.log(Object.getPrototypeOf(item1) === Object.prototype); // true
+//
+// console.log(item2.skuCode === undefined); // true
+// console.log(item2.itemName === undefined); // true
+// console.log(item2.category === undefined); // true
+// console.log(item2.quantity === undefined); // true
+// console.log(item2.notValid); // true
+// console.log(Object.getOwnPropertyNames(item2).length === 1); // true
+// console.log(Object.getPrototypeOf(item2) === Object.prototype); // true
+//
+// console.log(item3.skuCode === 'SOCSP'); // true
+// console.log(item3.quantity === 5); // true
+//
+// console.log(item4.notValid); // true
+//
+// console.log(item5.skuCode === 'FOOSP'); // true
+// console.log(item5.quantity === 3); // true
+//
+// console.log(item6.notValid); // true
+//
+// console.log(item7.skuCode === 'KITCO'); // true
+// console.log(item7.quantity === 3); // true
+
+// ===ItemManager TESTS===
+// ItemManager.create('basket ball', 'sports', 0);           // valid item
+// ItemManager.create('asd', 'sports', 0);
+// ItemManager.create('soccer ball', 'sports', 5);           // valid item
+// ItemManager.create('football', 'sports');
+// ItemManager.create('football', 'sports', 3);              // valid item
+// ItemManager.create('kitchen pot', 'cooking items', 0);
+// ItemManager.create('kitchen pot', 'cooking', 3);          // valid item
+//
+// console.log(ItemManager.items);
+//
+// ItemManager.delete('SOCSP');
+//
+// console.log(ItemManager.items);
+
+// ===ReportManager TESTS===
+
+// ItemManager.create('basket ball', 'sports', 0);           // valid item
+// ItemManager.create('asd', 'sports', 0);
+// ItemManager.create('soccer ball', 'sports', 5);           // valid item
+// ItemManager.create('football', 'sports');
+// ItemManager.create('football', 'sports', 3);              // valid item
+// ItemManager.create('kitchen pot', 'cooking items', 0);
+// ItemManager.create('kitchen pot', 'cooking', 3);          // valid item
+//
+// ReportManager.init(ItemManager);
+// ReportManager.reportInStock();
+//
+// var kitchenPotReporter = ReportManager.createReporter('KITCO');
+// kitchenPotReporter.itemInfo();
 </script>
   </body>
 </html>
