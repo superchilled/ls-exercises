@@ -89,5 +89,23 @@ Use this HTML and sample run to test out your code:
 ### Answer
 
 ```
-
+function sliceTree(startId, endId) {
+  if (!document.getElementById(startId) || !document.getElementById(endId)) {
+    return undefined;
+  }
+  var tree = [];
+  var currentNode = document.getElementById(endId);
+  while (currentNode.nodeName !== 'BODY') {
+    tree.unshift(currentNode);
+    if  (currentNode.id === String(startId)) {
+      break;
+    }
+    currentNode = currentNode.parentElement;
+  }
+  if (tree.map(node => node.id).includes(String(startId))) {
+    return tree.map(node => node.nodeName);
+  } else {
+    return undefined;
+  }
+};
 ```
