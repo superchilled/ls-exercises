@@ -1,25 +1,22 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Nodes to Array</title>
-    <script>
-      function arrayToNodes(nodes, parent) {
-        var parent = parent || document.documentElement;
-        nodes.forEach(function(elem) {
-          if (Array.isArray(elem)) {
-            arrayToNodes(elem, parent);
-          } else {
-            var newElem = document.createElement(elem);
-            if (elem === 'BODY' && document.body) {
-              document.documentElement.replaceChild(newElem, document.body);
-            } else {
-              parent.appendChild(newElem);
-            }
-            parent = newElem;
-          }
-        });
-      };
-    </script>
+  <head><title>
+    Title
+  </title><!--has three child nodes -->
   </head>
+  <body>
+    <header class="">
+      <div class="">
+        <section>
+          <h1 class="">H1</h1>
+          <p class="">Hello</p>
+          <p class="">World</p>
+        </section>
+      </div>
+    </header><article class="">
 
+    </article><footer class="">
+      <span class="emphasis"></span>
+    </footer>
+  </body>
 </html>
