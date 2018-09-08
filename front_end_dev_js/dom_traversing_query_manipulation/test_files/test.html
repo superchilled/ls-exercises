@@ -3,33 +3,23 @@
   <head>
     <title>Nodes to Array</title>
     <script>
-      function nodesToArr(currentElement) {
-        var currentElement = currentElement || document.body;
-        var childArr = [];
-
-        if (currentElement.children.length > 0) {
-          Array.prototype.slice.call(currentElement.children).forEach(function(child) {
-            childArr.push(nodesToArr(child));
-          });
-
-        }
-
-        return [currentElement.tagName, childArr];
+      function arrayToNodes(nodes, parent) {
+        var parent = parent || document.documentElement;
+        nodes.forEach(function(elem) {
+          if (Array.isArray(elem)) {
+            arrayToNodes(elem, parent);
+          } else {
+            var newElem = document.createElement(elem);
+            if (elem === 'BODY' && document.body) {
+              document.documentElement.replaceChild(newElem, document.body);
+            } else {
+              parent.appendChild(newElem);
+            }
+            parent = newElem;
+          }
+        });
       };
     </script>
   </head>
-  <body>
-    <div id="1">
-      <div id="4"></div>
-      <div id="5">
-        <div id="6"></div>
-      </div>
-    </div>
-    <div id="2"></div>
-    <div id="3">
-      <div id="7"></div>
-      <div id="8"></div>
-      <div id="9"></div>
-    </div>
-  </body>
+
 </html>
