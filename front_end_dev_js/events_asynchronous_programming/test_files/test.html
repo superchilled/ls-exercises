@@ -4,7 +4,46 @@
     <meta charset="utf-8">
     <title>Bold Element + Custom</title>
     <script>
-
+      // add event listener to 'nav' element. When clicked:
+        // remove 'highlight' class from all elements with 'highlight' class
+        // get the href value
+        // get the element with the id of the href
+        // add the 'highlight' class to the element
+      // add event listener to all article elements, to fire on the capturing phase and stop propogation. when clicked:
+        // remove 'highlight' class from all elements with 'highlight' class
+        // add 'highlight' class to 'currentTarget'
+      // add event listener to body. when clicked:
+        // remove 'highlight' class from all elements with 'highlight' class
+        // add 'highlight' class to 'main' element
+      function removeHighlights() {
+        var highlightedElems = document.querySelectorAll('.highlight');
+        Array.prototype.slice.call(highlightedElems).forEach(function(elem) {
+          elem.classList.remove('highlight');
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('ul').addEventListener('click', function(event) {
+          var clickedElem = event.target;
+          if (clickedElem.tagName === 'A') {
+            removeHighlights();
+            var articleId = clickedElem.getAttribute('href').slice(1);
+            document.getElementById(articleId).classList.add('highlight');
+          }
+        });
+        Array.prototype.slice.call(document.getElementsByTagName('ARTICLE')).forEach(function(articleElem) {
+          articleElem.addEventListener('click', function(event) {
+            event.stopPropagation();
+            removeHighlights();
+            event.currentTarget.classList.add('highlight');
+          });
+        });
+        document.body.addEventListener('click', function(event) {
+          if (event.target.tagName !== 'A') {
+            removeHighlights();
+            document.querySelector('main').classList.add('highlight');
+          }
+        });
+      });
     </script>
     <style media="screen">
       .highlight {
