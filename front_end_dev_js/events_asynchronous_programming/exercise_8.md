@@ -89,5 +89,20 @@ Notes on the scenarios:
 ### Answer
 
 ```
-
+function delegateEvent(elem, selector, eventType, callback) {
+  if (elem) {
+    elem.addEventListener(eventType, function(event) {
+      var targetElems = document.querySelectorAll(selector);
+      var targetElemsArr = Array.prototype.slice.call(targetElems);
+      if (targetElemsArr.includes(event.target)) {
+        callback(event);
+      }
+    });
+    return true;
+  } else {
+    return undefined;
+  }
+};
 ```
+
+Note: the LS solution also tests whether `elem` is an instance of `Element`.
