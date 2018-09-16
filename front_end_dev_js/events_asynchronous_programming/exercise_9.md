@@ -118,6 +118,7 @@ function track(callback) {
   return function(event) {
     event.stopPropagation();
     tracker.elems.push(event);
+    callback(event);
   };
 };
 ```
