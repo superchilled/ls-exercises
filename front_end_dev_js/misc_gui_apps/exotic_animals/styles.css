@@ -1,0 +1,22 @@
+body {
+  background-color: gray;
+  color: white;
+  font-family: sans-serif;
+}
+
+#exotic-animals figure {
+  width: 20%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+#exotic-animals figure img {
+  width: 100%;
+  border: 5px solid white;
+}
+
+#exotic-animals figcaption {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+}
