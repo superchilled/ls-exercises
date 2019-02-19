@@ -1,0 +1,25 @@
+body {
+  font: 18px/24px sans-serif;
+  background-color: rgb(151, 152, 38);
+}
+
+.wrapper {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.main-title {
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+}
+
+#languages {
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.hide {
+  display: none;
+}
