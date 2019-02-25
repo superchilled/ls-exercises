@@ -1,0 +1,134 @@
+body {
+  font: normal 20px/1.2em sans-serif;
+  background-color: green;
+}
+
+#todo-list {
+  list-style: none;
+}
+
+#todo-list li {
+  background-color: #fff;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+#todo-list li .remove {
+  width: 1em;
+  height: 1em;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+
+#todo-list li .remove:after {
+  content: 'X';
+  color: red;
+}
+
+#todo-list li .remove:hover,
+#todo-list li .remove:focus {
+  transform: scale(1.2);
+  transform-origin: center center;
+  transition: all .2s ease-in-out;
+}
+
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#modal {
+  position: absolute;
+  left: 50%;
+  top: 100px;
+  z-index: 3;
+  width: 400px;
+  margin-left: -200px;
+  padding: 10px;
+  background-color: #fff;
+  box-sizing: border-box;
+  text-align: center;
+  -webkit-transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    -moz-transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+#modal p {
+  font-size: 20px;
+  padding: 0;
+  margin: 20px 0;
+  text-align: left;
+  clear: both;
+}
+
+#modal button {
+  padding: 5px 10px;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#modal button[name='Yes'] {
+  background-color: green;
+}
+
+#modal button[name='No'] {
+  background-color: red;
+}
+
+#context-menu {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#context-menu li {
+  background-color: lightgray;
+  color: #000;
+  padding: 10px;
+  border-bottom: 1px solid #fff;
+  cursor: pointer;
+}
+
+#context-menu li:first-child {
+  border-radius: 5px 5px 0px 0px;
+}
+
+#context-menu li:last-child {
+  border-radius: 0px 0px 5px 5px;
+  border-bottom: none;
+}
+
+#context-menu li:hover,
+#context-menu li:focus {
+  background-color: darkgray;
+  color: #fff;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#modal_layer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, .3);
+}
