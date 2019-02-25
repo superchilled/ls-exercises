@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Todos: A Custom Delete Confirmation Prompt</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Todos</h1>
+      <ul id="todo-list">
+
+      </ul>
+    </div>
+    <script id="todo-list-template" type="text/x-handlebars">
+      {{#each todos}}
+      {{> todo}}
+      {{/each}}
+    </script>
+    <script id="todo-item-template" type="text/x-handlebars">
+      <li data-id="{{id}}">{{title}}<span class="remove"></span></li>
+    </script>
+  </body>
+  <div id="modal_layer" class="hidden"></div>
+  <div id="modal" class="hidden">
+    <p>Are you sure you want to delete this todo?</p>
+    <button type="button" name="Yes">Yes</button>
+    <button type="button" name="No">No</button>
+  </div>
+</html>
