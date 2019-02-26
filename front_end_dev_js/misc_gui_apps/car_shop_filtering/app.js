@@ -90,7 +90,7 @@ $(function() {
     var selectedPrice = $("select[name='price'] option:selected").val();
     var selectedYear = $("select[name='year'] option:selected").val();
     var filteredCars = filterCars(selectedMake, selectedModel, selectedPrice, selectedYear);
-    console.log(filteredCars);
+
     $carsList.html(carsListTemplateFunc({ cars: filteredCars }));
   });
 });
