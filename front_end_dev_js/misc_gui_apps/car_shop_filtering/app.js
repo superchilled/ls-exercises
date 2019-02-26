@@ -8,20 +8,31 @@ var cars = [
   { make: 'Audi', image: 'img/audi-a4-2013.jpg', model: 'A4', year: 2013, price: 26000 },
 ];
 
-var smallList = [
-  { make: 'Honda', image: 'img/honda-accord-2005.jpg', model: 'Accord', year: 2005, price: 7000 },
-  { make: 'Honda', image: 'img/honda-accord-2008.jpg', model: 'Accord', year: 2008, price: 11000 },
-  { make: 'Toyota', image: 'img/toyota-camry-2009.jpg', model: 'Camry', year: 2009, price: 12500 },
-];
-
 $(function() {
-  function filterCars(make) {
-    console.log(make);
+  function filterCars(make, model, price, year) {
     return cars.filter(function(car) {
       if (make === 'all') {
         return true;
       } else {
         return car.make === make;
+      }
+    }).filter(function(car) {
+      if (model === 'all') {
+        return true;
+      } else {
+        return car.model === model;
+      }
+    }).filter(function(car) {
+      if (price === 'any') {
+        return true;
+      } else {
+        return car.price <= Number(price);
+      }
+    }).filter(function(car) {
+      if (year === 'any') {
+        return true;
+      } else {
+        return car.year === Number(year);
       }
     });
   };
