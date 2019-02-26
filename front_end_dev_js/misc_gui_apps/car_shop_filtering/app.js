@@ -1,3 +1,43 @@
+function filterMake(make) {
+  return function(car) {
+    if (make === 'all') {
+      return true;
+    } else {
+      return car.make === make;
+    }
+  }
+};
+
+function filterModel(model) {
+  return function(car) {
+    if (model === 'all') {
+      return true;
+    } else {
+      return car.model === model;
+    }
+  }
+};
+
+function filterPrice(price) {
+  return function(car) {
+    if (price === 'any') {
+      return true;
+    } else {
+      return car.price <= Number(price);
+    }
+  }
+};
+
+function filterYear(year) {
+  return function(car) {
+    if (year === 'any') {
+      return true;
+    } else {
+      return car.year === Number(year);
+    }
+  }
+};
+
 var cars = [
   { make: 'Honda', image: 'img/honda-accord-2005.jpg', model: 'Accord', year: 2005, price: 7000 },
   { make: 'Honda', image: 'img/honda-accord-2008.jpg', model: 'Accord', year: 2008, price: 11000 },
@@ -10,31 +50,8 @@ var cars = [
 
 $(function() {
   function filterCars(make, model, price, year) {
-    return cars.filter(function(car) {
-      if (make === 'all') {
-        return true;
-      } else {
-        return car.make === make;
-      }
-    }).filter(function(car) {
-      if (model === 'all') {
-        return true;
-      } else {
-        return car.model === model;
-      }
-    }).filter(function(car) {
-      if (price === 'any') {
-        return true;
-      } else {
-        return car.price <= Number(price);
-      }
-    }).filter(function(car) {
-      if (year === 'any') {
-        return true;
-      } else {
-        return car.year === Number(year);
-      }
-    });
+    return cars.filter(filterMake(make)).filter(filterModel(model))
+               .filter(filterPrice(price)).filter(filterYear(year));
   };
 
   var makes = [...new Set(cars.map(car => car.make))];
