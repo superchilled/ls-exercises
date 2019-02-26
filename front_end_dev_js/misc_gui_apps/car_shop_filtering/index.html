@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Buy Used Cars: A Car Shop With Filtering</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Buy Used Cars</h1>
+      <form id="filter-form" action="" method="post">
+        <label for="make">Make</label>
+        <select class="" name="make">
+          <option value="all">All</option>
+        </select>
+        <label for="make">Model</label>
+        <select class="" name="model">
+          <option value="all">All</option>
+        </select>
+        <label for="make">Price</label>
+        <select class="" name="price">
+          <option value="any">Any</option>
+        </select>
+        <label for="make">Year</label>
+        <select class="" name="year">
+          <option value="any">Any</option>
+        </select>
+        <button type="submit" name="submit">Filter</button>
+      </form>
+    </header>
+    <main>
+      <ul id="cars-list">
+
+      </ul>
+    </main>
+    <script id="cars-list-template" type="text/x-handlebars">
+      {{#each cars}}
+        {{>car}}
+      {{/each}}
+    </script>
+    <script id="car-listing-template" type="text/x-handlebars">
+      <li>
+        <img src="{{image}}" />
+        <h2>{{make}} {{model}}</h2>
+        <p>Year: {{year}}</p>
+        <p>Price: {{price}}</p>
+        <button class="buy-button">Buy</button>
+      </li>
+    </script>
+    <script id="dropdown-options-template" type="text/x-handlebars">
+      {{#each options}}
+        {{>option}}
+      {{/each}}
+    </script>
+    <script id="dropdown-option-template" type="text/x-handlebars">
+      <option value="{{this}}">{{this}}</option>
+    </script>
+  </body>
+</html>
