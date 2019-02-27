@@ -1,0 +1,53 @@
+body {
+  background-color: green;
+  font: normal 18px/1.5em sans-serif;
+}
+
+.signup-form {
+  width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.signup-form legend {
+  font-size: 22px;
+  font-weight: bold;
+}
+.signup-form fieldset {
+  border: none;
+}
+
+.signup-form label {
+  padding-bottom: 2em;
+}
+
+.signup-form label,
+.signup-form input {
+  display: block;
+}
+
+.signup-form input {
+  min-width: 700px;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  border-style: 1px solid #cccccc;
+}
+
+.signup-form .error-message {
+  display: block;
+  min-height: 2em;
+  color: red;
+}
+
+.signup-form button {
+  background-color: green;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+}

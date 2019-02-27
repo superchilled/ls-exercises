@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <form class="signup-form" action="index.html" method="post">
+      <fieldset>
+        <legend>Sign Up Form</legend>
+        <label>First Name
+          <input type="text" name="firstname" value="">
+        </label>
+        <label>Last Name
+          <input type="text" name="lastname" value="">
+        </label>
+        <label>Email
+          <input type="email" name="email" value="">
+        </label>
+        <label>Password
+          <input type="password" name="password" value="">
+        </label>
+        <label>Phone
+          <input type="tel" name="phone" value="">
+        </label>
+        <button type="submit" name="submit">Sign Up</button>
+      </fieldset>
+    </form>
+    <script id="error" type="text/x-handlebars">
+      <p class="error-message">{{message}}</p>
+    </script>
+  </body>
+</html>
