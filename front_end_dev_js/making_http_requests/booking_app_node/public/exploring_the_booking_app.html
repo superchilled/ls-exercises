@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(event) {
+      var staffNumber = document.getElementById('staff_no');
+      var studentNumber = document.getElementById('student_no');
+      var scheduleNumber = document.getElementById('schedule_no');
+      var scheduleBookings = document.getElementById('schedule_bookings');
+      var scheduleStaff = document.getElementById('schedule_staff');
+      var allStudentsScheduled = document.getElementById('all_students_scheduled');
+
+      var get_staff = new XMLHttpRequest();
+      get_staff.open('GET', '/api/staff_members');
+      get_staff.send();
+      get_staff.addEventListener('load', function(event) {
+        var request = event.target;
+        var jsonObj = JSON.parse(request.responseText)
+        var numberOfStaff = jsonObj.length;
+        staffNumber.textContent = String(numberOfStaff);
+
+        var staffWithSchedules = 0;
+        jsonObj.forEach(function(staff) {
+          var staffSchedule = new XMLHttpRequest();
+          staffSchedule.open('GET', '/api/schedules/' + staff.id);
+          staffSchedule.send();
+          staffSchedule.addEventListener('load', function(event) {
+            var request = event.target;
+            var jsonObj = JSON.parse(request.responseText)
+            if (jsonObj.length > 0) {
+              staffWithSchedules += 1;
+            }
+            if (staffWithSchedules >= numberOfStaff) {
+              scheduleStaff.textContent = 'Yes';
+            } else {
+              scheduleStaff.textContent = 'No';
+            }
+          });
+
+        });
+      });
+
+      var get_students = new XMLHttpRequest();
+      get_students.open('GET', '/api/students');
+      get_students.send();
+      get_students.addEventListener('load', function(event) {
+        var request = event.target;
+        var students = JSON.parse(request.responseText)
+        studentNumber.textContent = String(students.length);
+
+        var get_schedules = new XMLHttpRequest();
+        get_schedules.open('GET', '/api/schedules');
+        get_schedules.send();
+        get_schedules.addEventListener('load', function(event) {
+          var request = event.target;
+          var jsonObj = JSON.parse(request.responseText)
+          var uniqueBookedStudents = [];
+
+          jsonObj.forEach(function(schedule) {
+            var studentEmail = schedule.student_email;
+            if (studentEmail !== null && uniqueBookedStudents.indexOf(studentEmail) === -1) {
+              uniqueBookedStudents.push(studentEmail);
+            }
+          });
+          console.log(uniqueBookedStudents);
+          if (students.length === uniqueBookedStudents.length) {
+            allStudentsScheduled.textContent = 'Yes';
+          } else {
+            allStudentsScheduled.textContent = 'No';
+          }
+        });
+      });
+
+      var get_schedules = new XMLHttpRequest();
+      get_schedules.open('GET', '/api/schedules');
+      get_schedules.send();
+      get_schedules.addEventListener('load', function(event) {
+        var request = event.target;
+        var jsonObj = JSON.parse(request.responseText)
+        scheduleNumber.textContent = String(jsonObj.length);
+
+        var bookedSchedules = jsonObj.filter(function(schedule) {
+          if (schedule.student_email === null) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+        scheduleBookings.textContent = String(bookedSchedules.length);
+      });
+
+
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Exploring the Booking App</h1>
+  </header>
+  <main>
+    <ul>
+      <li>How many staff are there? <span id="staff_no"></span></li>
+      <li>How many students are there? <span id="student_no"></span></li>
+      <li>How many schedules exist? <span id="schedule_no"></span></li>
+      <li>How many schedules have bookings? <span id="schedule_bookings"></span></li>
+      <li>Do all staff have schedules? <span id="schedule_staff"></span></li>
+      <li>Did all students book a schedule? <span id="all_students_scheduled"></span></li>
+    </ul>
+  </main>
+  <footer>
+    <p><a href="/doc/">Booking App API Reference</a></p>
+
+  </footer>
+</body>
+</html>
